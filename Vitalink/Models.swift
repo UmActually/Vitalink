@@ -16,6 +16,7 @@ typealias IndicatorResult = Result<HealthIndicator, APIError>
 typealias IndicatorsResult = Result<[HealthIndicator], APIError>
 typealias RecordResult = Result<HealthRecord, APIError>
 typealias HistoryResult = Result<HealthRecordHistory, APIError>
+typealias IndicatorHistoryResult = Result<IndicatorSpecificHistory, APIError>
 
 struct Patient: Codable, Identifiable {
     let id: Int
@@ -49,6 +50,17 @@ struct HealthRecord: Codable, Identifiable {
     let note: String?
     let user: Int
     let healthIndicator: HealthIndicator
+    
+    static let sample = HealthRecord(id: 1, date: Date(), value: 37.5, note: "Fiebre terminó desde hoy en la mañana.", user: 0, healthIndicator: HealthIndicator(id: 1, name: "Temperatura corporal", medicalName: "Cefalea tensional", isCuantitative: true, isDecimal: true, unitOfMeasurement: "°C", min: 25, max: 50, addedBy: nil))
+}
+
+struct MinimalHealthRecord: Codable, Identifiable {
+    // Cuando se despliega el historial de un mismo indicador,
+    // es redundante tener éste en los JSONs.
+    let id: Int
+    let date: Date
+    let value: Double
+    let note: String?
 }
 
 struct HealthRecordHistory: Codable {
@@ -60,6 +72,16 @@ struct HealthRecordHistory: Codable {
     // Los registros están agrupodos por día,
     // por eso es lista de listas.
     let results: [[HealthRecord]]
+}
+
+struct IndicatorSpecificHistory: Codable {
+    // Info de la paginación
+    let count: Int
+    let next: String?
+    let previous: String?
+    
+    let results: [MinimalHealthRecord]
+    let currentMonthCount: Int
 }
 
 // Ejemplos de JSON:

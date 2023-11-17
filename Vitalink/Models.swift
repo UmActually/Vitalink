@@ -64,14 +64,15 @@ struct MinimalHealthRecord: Codable, Identifiable {
 }
 
 struct HealthRecordHistory: Codable {
-    // Info de la paginación
-    let count: Int
-    let next: String?
-    let previous: String?
+    // Info de la paginación. Los attrs son variables
+    // por el hecho de ser actualizados al pasar de página.
+    var count: Int
+    var next: String?
+    var previous: String?
     
     // Los registros están agrupodos por día,
     // por eso es lista de listas.
-    let results: [[HealthRecord]]
+    var results: [[HealthRecord]]
 }
 
 struct IndicatorSpecificHistory: Codable {

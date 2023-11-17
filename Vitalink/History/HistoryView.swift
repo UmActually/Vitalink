@@ -16,27 +16,55 @@ struct HistoryView: View {
     var body: some View {
         NavigationView {
             if let history = history {
-                List(history.results, id: \.self[0].id) { dayRecords in
-                    Section(content: {
-                        ForEach(dayRecords) { record in
-                            NavigationLink(destination: IndicatorHistory(indicator: record.healthIndicator)) {
-                                HistoryElement(record: record)
-                            }
-                        }
-                        .onDelete { offsets in
-                            Task {
-                                for index in offsets {
-                                    let recordID = dayRecords[index].id
-                                    let _: EmptyResult = await API.call("records/\(recordID)/", method: .delete)
+                List {
+                    ForEach(history.results, id: \.self[0].id) { dayRecords in
+                        Section(content: {
+                            ForEach(dayRecords) { record in
+                                NavigationLink(destination: IndicatorHistory(indicator: record.healthIndicator)) {
+                                    HistoryElement(record: record)
                                 }
-                                // Esto está MUY sucio, hay que ver una mejor manera maybe
-                                try! await Task.sleep(nanoseconds: 500_000_000)
-                                manuallyReloadView.toggle()
                             }
+                            .onDelete { offsets in
+                                Task {
+                                    for index in offsets {
+                                        let recordID = dayRecords[index].id
+                                        let result: EmptyResult = await API.call("records/\(recordID)/", method: .delete)
+                                        switch result {
+                                        case .success(_):
+                                            manuallyReloadView.toggle()
+                                        case .failure(_):
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        }, header: {
+                            Text(historyDateFormatter.string(from: dayRecords[0].date))
+                        })
+                    }
+                    
+                    // dropFirst es para quitarle el "http://localhost:80/"
+                    if let next = history.next?.dropFirst(20) {
+                        HStack {
+                            Spacer()
+                            Button("Cargar Más") {
+                                Task {
+                                    let result: HistoryResult = await API.call(String(next))
+                                    switch result {
+                                    case .success(let value):
+                                        withAnimation {
+                                            self.history!.results.append(contentsOf: value.results)
+                                        }
+                                        self.history!.next = value.next
+                                        self.history!.count += value.count
+                                    case .failure(_):
+                                        break
+                                    }
+                                }
+                            }
+                            Spacer()
                         }
-                    }, header: {
-                        Text(historyDateFormatter.string(from: dayRecords[0].date))
-                    })
+                    }
                 }
                 .id(manuallyReloadView)
                 .listStyle(.insetGrouped)

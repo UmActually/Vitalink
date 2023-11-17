@@ -40,8 +40,8 @@ struct IndicatorHistory: View {
                                 )
                             }
                         }
-                        .chartXAxisLabel("Fecha")
-                        .chartYAxisLabel("Intensidad")
+                        .chartXAxisLabel("Tiempo")
+                        .chartYAxisLabel(indicator.unitOfMeasurement ?? "Intensidad")
                         .chartYAxis {
                             AxisMarks(values: .automatic(desiredCount: 5))
                         }

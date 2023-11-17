@@ -79,6 +79,15 @@ struct APIError: Error {
     }
     
     let fallbackFormatter = DateFormatter()
+    // 2023-11-15T23:07:51-06:00
+    fallbackFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+    fallbackFormatter.locale = Locale(identifier: "en_US_POSIX")
+    fallbackFormatter.timeZone = TimeZone(identifier: "UTC-6:00")
+    
+    if let date = fallbackFormatter.date(from: dateString) {
+        return date
+    }
+    
     fallbackFormatter.dateFormat = "yyyy-MM-dd"
     
     if let date = fallbackFormatter.date(from: dateString) {
@@ -93,7 +102,7 @@ struct APIError: Error {
 }
 
 final class API {
-    static let shared = API(email: "EMAIL", password: "PASSWORD")
+    static let shared = API(email: "", password: "")
     static let testUserToken = ""
     static let adminToken = ""
     

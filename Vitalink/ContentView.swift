@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var tab: Tab = .home
+    @EnvironmentObject var modelData: ModelData
     
     var body: some View {
-        TabView(selection: $tab) {
+        TabView(selection: $modelData.tab) {
             HistoryView()
                 .tabItem {
                     Label("Inicio", systemImage: "house")
@@ -22,19 +22,19 @@ struct ContentView: View {
                     Label("Registro", systemImage: "plus")
                 }
                 .tag(Tab.newRecord)
-            Text("Profile")
+            RegistrationView()
                 .tabItem {
                     Label("Perfil", systemImage: "person")
                 }
                 .tag(Tab.profile)
         }
+        .alert(isPresented: $modelData.registrationSuccess) {
+            Alert(title: Text("Alerta"), message: Text("Registro guardado con éxito."), dismissButton: .default(Text("OK")))
+        }
     }
-}
-
-enum Tab {
-    case home, newRecord, profile
 }
 
 #Preview {
     ContentView()
+        .environmentObject(ModelData())
 }

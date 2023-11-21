@@ -43,8 +43,9 @@ struct HistoryView: View {
                         })
                     }
                     
-                    // dropFirst es para quitarle el "http://localhost:80/"
-                    if let next = history.next?.dropFirst(20) {
+                    // dropFirst es para quitarle el "http://localhost:80/" -> 20
+                    // "http://umm-actually.com/" -> 24
+                    if let next = history.next?.dropFirst(24) {
                         HStack {
                             Spacer()
                             Button("Cargar Más") {
@@ -70,7 +71,8 @@ struct HistoryView: View {
                 .listStyle(.insetGrouped)
                 .navigationTitle("Historial")
             } else {
-                Text("Cargando...")
+                ProgressView("Cargando...")
+                    .progressViewStyle(.circular)
                     .navigationTitle("Historial")
             }
         }

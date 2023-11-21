@@ -12,7 +12,7 @@ typealias DjangoError = [String: String]
 typealias DjangoSerializerError = [String: [String]]
 
 //let baseURL = "http://localhost:8000/"
-let baseURL = "http://10.14.255.92/"
+let baseURL = "https://umm-actually.com/"
 
 func getEndpoint(_ path: String) -> URL {
     URL(string: baseURL + path)!
@@ -102,23 +102,35 @@ struct APIError: Error {
 }
 
 final class API {
-    static let shared = API(email: "", password: "")
-    static let testUserToken = ""
-    static let adminToken = ""
+    static let testing = true
     
-    let email: String
-    let password: String
+    static var shared = API()
+    static let tests = API(email: "hermenegildo@example.com", password: "")
+    
+    var email: String?
+    var password: String?
     var bearerToken: String?
     
     init(email: String, password: String) {
         self.email = email
         self.password = password
-//        self.bearerToken = Self.testUserToken
+    }
+    
+    init(bearerToken: String) {
+        self.bearerToken = bearerToken
+    }
+    
+    init() {
+        
     }
     
     func login() async -> String {
         if let token = bearerToken {
             return token
+        }
+        
+        guard let email = email, let password = password else {
+            fatalError("Como que me falta EL EMAIL amigos...")
         }
         
         let endpoint = getEndpoint("token/")
@@ -149,17 +161,22 @@ final class API {
         }
     }
     
-    func call<T: Decodable>(_ endpointPath: String, method: HTTPMethod = .get, body: Encodable? = nil) async -> Result<T, APIError> {
-        let token = await login()
+    func call<T: Decodable>(_ endpointPath: String, method: HTTPMethod = .get, body: Encodable? = nil, requiresToken: Bool = true) async -> Result<T, APIError> {
+        let token = requiresToken ? await login() : ""
         let endpoint = getEndpoint(endpointPath)
         
         var request = URLRequest(url: endpoint)
         request.httpMethod = method.asString()
-        request.addValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        
+        if requiresToken {
+            request.addValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+        }
         
         if let body = body {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            let jsonData = try! JSONEncoder().encode(body)
+            let encoder = JSONEncoder()
+            encoder.keyEncodingStrategy = .convertToSnakeCase
+            let jsonData = try! encoder.encode(body)
             request.httpBody = jsonData
         }
         
@@ -189,7 +206,8 @@ final class API {
     }
     
     // Convenience func para usar API.call() en lugar de API.shared.call()
-    static func call<T: Decodable>(_ endpointPath: String, method: HTTPMethod = .get, body: Encodable? = nil) async -> Result<T, APIError> {
-        return await Self.shared.call(endpointPath, method: method, body: body)
+    static func call<T: Decodable>(_ endpointPath: String, method: HTTPMethod = .get, body: Encodable? = nil, requiresToken: Bool = true) async -> Result<T, APIError> {
+        let instance = testing ? Self.tests : Self.shared
+        return await instance.call(endpointPath, method: method, body: body, requiresToken: requiresToken)
     }
 }

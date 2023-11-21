@@ -6,29 +6,62 @@
 //
 
 import Foundation
+import SwiftUI
 
 // Para especificar el tipo de resultado cada vez que se use API.call(), ejemplo:
 // let result: HistoryResult = await API.call("records/history/")
 
 typealias EmptyResult = Result<[String: String], APIError>
+typealias GenericResult = Result<GenericJSON, APIError>
 typealias PatientResult = Result<Patient, APIError>
 typealias IndicatorResult = Result<HealthIndicator, APIError>
 typealias IndicatorsResult = Result<[HealthIndicator], APIError>
 typealias RecordResult = Result<HealthRecord, APIError>
 typealias HistoryResult = Result<HealthRecordHistory, APIError>
 typealias IndicatorHistoryResult = Result<IndicatorSpecificHistory, APIError>
+typealias RegistrationResult = Result<RegistrationResponse, APIError>
 
 struct Patient: Codable, Identifiable {
     let id: Int
     let email: String
     let firstNames: String
     let lastNames: String
-    let phoneNumber: String
+    let phoneNumber: String?
     let dateJoined: Date
     let birthDate: Date
     let height: Double
     let medicalHistory: String?
     let doctor: Int
+}
+
+struct PatientRegistration: Codable {
+    let email: String
+    let password: String
+    let firstNames: String
+    let lastNames: String
+    let phoneNumber: String?
+    let birthDate: String
+    let height: Double?
+    let medicalHistory: String?
+    let doctorId: Int
+    
+    init(email: String, password: String, firstNames: String, lastNames: String, phoneNumber: String, birthDate: Date, height: String, medicalHistory: String, doctor: Int) {
+        self.email = email
+        self.password = password
+        self.firstNames = firstNames
+        self.lastNames = lastNames
+        self.phoneNumber = phoneNumber.isEmpty ? nil : phoneNumber
+        self.birthDate = Self.dateFormatter.string(from: birthDate)
+        self.height = height.isEmpty ? nil : Double(height)
+        self.medicalHistory = medicalHistory.isEmpty ? nil : medicalHistory
+        self.doctorId = doctor
+    }
+    
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
 }
 
 struct HealthIndicator: Codable, Identifiable {
@@ -85,44 +118,46 @@ struct IndicatorSpecificHistory: Codable {
     let currentMonthCount: Int
 }
 
-// Ejemplos de JSON:
+struct RegistrationResponse: Codable, Identifiable {
+    let id: Int
+    let token: String
+}
 
-//{
-//    "id": 4,
-//    "email": "hermenegildo@example.com",
-//    "role": 0,
-//    "first_names": "Hermenegildo",
-//    "last_names": "Pérez Galaz",
-//    "phone_number": "8195417619",
-//    "date_joined": "2023-11-11T01:03:42.995048-06:00",
-//    "birth_date": "1971-02-13",
-//    "height": 1.83,
-//    "medical_history": null,
-//    "doctor": 3
-//}
+enum Tab {
+    case home, newRecord, profile
+}
 
-//{
-//    "count": 1,
-//    "next": null,
-//    "previous": null,
-//    "results": [
-//        {
-//            "id": 1,
-//            "health_indicator": {
-//                "id": 1,
-//                "name": "Temperatura corporal",
-//                "medical_name": null,
-//                "is_cuantitative": true,
-//                "is_decimal": true,
-//                "unit_of_measurement": "°C",
-//                "min": 25.0,
-//                "max": 50.0,
-//                "added_by": null
-//            },
-//            "date": "2023-11-11T01:59:56.283675-06:00",
-//            "value": 37.4,
-//            "note": "Empezó a bajar la fiebre en la mañana.",
-//            "user": 4
-//        }
-//    ]
-//}
+final class ModelData: ObservableObject {
+    // Tab de la vista principal
+    @Published var tab: Tab = .home
+    
+    // Datos de registro
+    @Published var firstNames: String = ""
+    @Published var lastNames: String = ""
+    @Published var email: String = ""
+    @Published var phoneNumber: String = ""
+    @Published var birthDate: Date = Date()
+    
+    @Published var password: String = ""
+    
+    @Published var height: String = ""
+    @Published var medicalHistory: String = ""
+    @Published var profilePhotoData: Data? = nil
+    
+    @Published var registrationSuccess = false
+    
+    func registerUser() async -> RegistrationResult {
+        let body = PatientRegistration(
+            email: email,
+            password: password,
+            firstNames: firstNames,
+            lastNames: lastNames,
+            phoneNumber: phoneNumber,
+            birthDate: birthDate,
+            height: height,
+            medicalHistory: medicalHistory,
+            doctor: 2)
+        
+        return await API.call("users/", method: .post, body: body, requiresToken: false)
+    }
+}

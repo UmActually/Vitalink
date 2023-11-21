@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A70E798F2B0BF1400026F138 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70E798E2B0BF1400026F138 /* LoadingOverlay.swift */; };
+		A70FAFD42B080E0C00ACC640 /* RegistrationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70FAFD32B080E0C00ACC640 /* RegistrationButton.swift */; };
 		A748E70C2B01F4D60002990A /* VitalinkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748E70B2B01F4D60002990A /* VitalinkApp.swift */; };
 		A748E70E2B01F4D60002990A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748E70D2B01F4D60002990A /* ContentView.swift */; };
 		A748E7102B01F4D80002990A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A748E70F2B01F4D80002990A /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 		A748E7292B01F4D80002990A /* VitalinkUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748E7282B01F4D80002990A /* VitalinkUITestsLaunchTests.swift */; };
 		A748E7362B01F5390002990A /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748E7352B01F5390002990A /* Models.swift */; };
 		A748E7382B01F55C0002990A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748E7372B01F55C0002990A /* API.swift */; };
+		A7B552F22B07FC3300046C80 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B552F12B07FC3300046C80 /* RegistrationView.swift */; };
+		A7B552F42B07FD2000046C80 /* MedicalBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B552F32B07FD2000046C80 /* MedicalBackground.swift */; };
 		A7F55A7D2B05DCB80076580F /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F55A7C2B05DCB80076580F /* HistoryView.swift */; };
 		A7F55A7F2B05DCEB0076580F /* RecordValueBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F55A7E2B05DCEB0076580F /* RecordValueBar.swift */; };
 		A7F55A812B05DD110076580F /* IndicatorHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F55A802B05DD110076580F /* IndicatorHistory.swift */; };
@@ -40,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A70E798E2B0BF1400026F138 /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
+		A70FAFD32B080E0C00ACC640 /* RegistrationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationButton.swift; sourceTree = "<group>"; };
 		A748E7082B01F4D60002990A /* Vitalink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vitalink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A748E70B2B01F4D60002990A /* VitalinkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitalinkApp.swift; sourceTree = "<group>"; };
 		A748E70D2B01F4D60002990A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +58,8 @@
 		A748E7282B01F4D80002990A /* VitalinkUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitalinkUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A748E7352B01F5390002990A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		A748E7372B01F55C0002990A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		A7B552F12B07FC3300046C80 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		A7B552F32B07FD2000046C80 /* MedicalBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalBackground.swift; sourceTree = "<group>"; };
 		A7F55A7C2B05DCB80076580F /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		A7F55A7E2B05DCEB0076580F /* RecordValueBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordValueBar.swift; sourceTree = "<group>"; };
 		A7F55A802B05DD110076580F /* IndicatorHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorHistory.swift; sourceTree = "<group>"; };
@@ -83,6 +91,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A70E79902B0BF1880026F138 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				A70E798E2B0BF1400026F138 /* LoadingOverlay.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
 		A748E6FF2B01F4D60002990A = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +124,8 @@
 			children = (
 				A748E70B2B01F4D60002990A /* VitalinkApp.swift */,
 				A748E70D2B01F4D60002990A /* ContentView.swift */,
+				A70E79902B0BF1880026F138 /* Other */,
+				A7B552F62B07FD3700046C80 /* Registration */,
 				A748E7352B01F5390002990A /* Models.swift */,
 				A748E7372B01F55C0002990A /* API.swift */,
 				A7F55A842B0604EA0076580F /* History */,
@@ -140,6 +158,16 @@
 				A748E7282B01F4D80002990A /* VitalinkUITestsLaunchTests.swift */,
 			);
 			path = VitalinkUITests;
+			sourceTree = "<group>";
+		};
+		A7B552F62B07FD3700046C80 /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				A7B552F12B07FC3300046C80 /* RegistrationView.swift */,
+				A70FAFD32B080E0C00ACC640 /* RegistrationButton.swift */,
+				A7B552F32B07FD2000046C80 /* MedicalBackground.swift */,
+			);
+			path = Registration;
 			sourceTree = "<group>";
 		};
 		A7F55A842B0604EA0076580F /* History */ = {
@@ -286,11 +314,15 @@
 				A748E7362B01F5390002990A /* Models.swift in Sources */,
 				A7F55A812B05DD110076580F /* IndicatorHistory.swift in Sources */,
 				A748E70E2B01F4D60002990A /* ContentView.swift in Sources */,
+				A7B552F22B07FC3300046C80 /* RegistrationView.swift in Sources */,
 				A7F55A832B05F02B0076580F /* HistoryElement.swift in Sources */,
+				A70FAFD42B080E0C00ACC640 /* RegistrationButton.swift in Sources */,
 				A7F55A7F2B05DCEB0076580F /* RecordValueBar.swift in Sources */,
 				A7F55A7D2B05DCB80076580F /* HistoryView.swift in Sources */,
 				A748E7382B01F55C0002990A /* API.swift in Sources */,
 				A748E70C2B01F4D60002990A /* VitalinkApp.swift in Sources */,
+				A7B552F42B07FD2000046C80 /* MedicalBackground.swift in Sources */,
+				A70E798F2B0BF1400026F138 /* LoadingOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

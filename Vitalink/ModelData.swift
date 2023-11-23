@@ -28,6 +28,9 @@ final class ModelData: ObservableObject {
     
     @Published var registrationSuccess = false
     
+    // Creación de registros
+    @Published var recordInputs = [HealthRecordInput]()
+    
     func registerUser() async -> RegistrationResult {
         let body = PatientRegistration(
             email: email,

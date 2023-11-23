@@ -89,7 +89,7 @@ struct HealthRecord: Codable, Identifiable {
     let user: Int
     let healthIndicator: HealthIndicator
     
-    static let sample = HealthRecord(id: 1, date: Date(), value: 37.5, note: "Fiebre terminó desde hoy en la mañana.", user: 0, healthIndicator: HealthIndicator(id: 1, name: "Temperatura corporal", medicalName: "Cefalea tensional", isCuantitative: true, isDecimal: true, unitOfMeasurement: "°C", min: 25, max: 50, addedBy: nil))
+    static let sample = HealthRecord(id: 1, date: Date(), value: 37.5, note: "Fiebre terminó desde hoy en la mañana.", user: 0, healthIndicator: HealthIndicator(id: 1, name: "Temperatura corporal", medicalName: "Cefalea tensional", isCuantitative: false, isDecimal: true, unitOfMeasurement: "°C", min: 1, max: 10, addedBy: nil))
 }
 
 struct MinimalHealthRecord: Codable, Identifiable {
@@ -99,6 +99,12 @@ struct MinimalHealthRecord: Codable, Identifiable {
     let date: Date
     let value: Double
     let note: String?
+}
+
+struct HealthRecordInput {
+    let healthIndicator: HealthIndicator
+    var value: Double
+    var note: String
 }
 
 struct HealthRecordHistory: Codable {

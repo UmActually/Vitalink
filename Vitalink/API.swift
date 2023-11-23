@@ -102,67 +102,46 @@ struct APIError: Error {
 }
 
 final class API {
-    static let testing = true
+    static let testing = false
     
     static var shared = API()
     static let tests = API(email: "hermenegildo@example.com", password: "")
     
-    var email: String?
-    var password: String?
     var bearerToken: String?
     
+    init(bearerToken: String? = nil) {
+        if let bearerToken = bearerToken {
+            self.bearerToken = bearerToken
+            Keychain.saveToken(bearerToken)
+        } else {
+            if let keychainToken = Keychain.loadToken() {
+                self.bearerToken = keychainToken
+            } else {
+                self.bearerToken = nil
+            }
+        }
+    }
+    
+    // Solo para pruebas
     init(email: String, password: String) {
-        self.email = email
-        self.password = password
-    }
-    
-    init(bearerToken: String) {
-        self.bearerToken = bearerToken
-    }
-    
-    init() {
-        
-    }
-    
-    func login() async -> String {
-        if let token = bearerToken {
-            return token
-        }
-        
-        guard let email = email, let password = password else {
-            fatalError("Como que me falta EL EMAIL amigos...")
-        }
-        
-        let endpoint = getEndpoint("token/")
-        let body = ["email": email, "password": password]
-        
-        var request = URLRequest(url: endpoint)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let jsonData = try! JSONEncoder().encode(body)
-        request.httpBody = jsonData
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            let httpResponse = response as! HTTPURLResponse
-            guard isSuccess(httpResponse.statusCode) else {
-                fatalError("HTTP status code: \(httpResponse.statusCode).")
+        let credentials = UserCredentials(email: email, password: password)
+        Task {
+            let result: StringResult = await call("token/", method: .post, body: credentials, requiresToken: false)
+            switch result {
+            case .success(let value):
+                bearerToken = value["access"]
+            case .failure(_):
+                break
             }
-            do {
-                let parsedData = try JSONDecoder().decode([String: String].self, from: data)
-                self.bearerToken = parsedData["access"]!
-                return self.bearerToken!
-            } catch {
-                fatalError("Mamó la deserialización de JSON.")
-            }
-        } catch {
-            fatalError("Mamó la POST request: \(error).")
         }
     }
     
     func call<T: Decodable>(_ endpointPath: String, method: HTTPMethod = .get, body: Encodable? = nil, requiresToken: Bool = true) async -> Result<T, APIError> {
-        let token = requiresToken ? await login() : ""
+        let token = requiresToken ? bearerToken : ""
+        guard let token = token else {
+            return .failure(.init(0, nil))
+        }
+        
         let endpoint = getEndpoint(endpointPath)
         
         var request = URLRequest(url: endpoint)
@@ -209,5 +188,20 @@ final class API {
     static func call<T: Decodable>(_ endpointPath: String, method: HTTPMethod = .get, body: Encodable? = nil, requiresToken: Bool = true) async -> Result<T, APIError> {
         let instance = testing ? Self.tests : Self.shared
         return await instance.call(endpointPath, method: method, body: body, requiresToken: requiresToken)
+    }
+    
+    var userIsAuthenticated: Bool {
+        bearerToken != nil
+    }
+    
+    static func userIsAuthenticated() -> Bool {
+        let instance = testing ? Self.tests : Self.shared
+        return instance.userIsAuthenticated
+    }
+    
+    static func logout() {
+        Keychain.deleteToken()
+        let instance = testing ? Self.tests : Self.shared
+        instance.bearerToken = nil
     }
 }

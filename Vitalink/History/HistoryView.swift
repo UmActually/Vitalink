@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct HistoryView: View {
-    @State private var manuallyReloadView = false
+    @EnvironmentObject var modelData: ModelData
+    
     @State private var history: HealthRecordHistory? = nil
     @State private var alertPresented = false
     @State private var alertText = ""
+    @State private var loadingMore = false
     
     var body: some View {
         NavigationView {
@@ -28,10 +30,10 @@ struct HistoryView: View {
                                 Task {
                                     for index in offsets {
                                         let recordID = dayRecords[index].id
-                                        let result: EmptyResult = await API.call("records/\(recordID)/", method: .delete)
+                                        let result: StringResult = await API.call("records/\(recordID)/", method: .delete)
                                         switch result {
                                         case .success(_):
-                                            manuallyReloadView.toggle()
+                                            modelData.manuallyReloadViews.toggle()
                                         case .failure(_):
                                             break
                                         }
@@ -48,9 +50,13 @@ struct HistoryView: View {
                     if let next = history.next?.dropFirst(24) {
                         HStack {
                             Spacer()
-                            Button("Cargar Más") {
+                            Button(loadingMore ? "Cargando..." : "Cargar Más") {
                                 Task {
+                                    withAnimation {
+                                        loadingMore = true
+                                    }
                                     let result: HistoryResult = await API.call(String(next))
+                                    loadingMore = false
                                     switch result {
                                     case .success(let value):
                                         withAnimation {
@@ -67,7 +73,7 @@ struct HistoryView: View {
                         }
                     }
                 }
-                .id(manuallyReloadView)
+                .id(modelData.manuallyReloadViews)
                 .listStyle(.insetGrouped)
                 .navigationTitle("Historial")
             } else {
@@ -99,4 +105,5 @@ struct HistoryView: View {
 
 #Preview {
     HistoryView()
+        .environmentObject(ModelData())
 }

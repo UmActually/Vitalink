@@ -16,6 +16,7 @@ struct LoadingOverlay: View {
     
     var body: some View {
         ProgressView(message)
+            .fontDesign(.rounded)
             .foregroundStyle(.white)
             .padding()
             .background()

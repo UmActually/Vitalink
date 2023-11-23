@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct MedicalBackground: View {
-    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var modelData: ModelData
     
     @State private var personalBackground = ""
     @State private var familyBackground = ""
-    @State private var registering = false
+    @State private var loading = false
     @State private var registrationFailure = true
     
     var body: some View {
@@ -49,28 +48,17 @@ struct MedicalBackground: View {
                 modelData.medicalHistory = "Antecedentes Personales:\n\(personalBackground)\n\nAntecedentes Familiares:\n\(familyBackground)"
                 
                 Task {
-                    registering = true
+                    loading = true
                     print("Registering user...")
                     let result = await modelData.registerUser()
-                    registering = false
+                    loading = false
                     print("Parsing result...")
                     switch result {
                     case .success(let value):
-                        print("Changing API object...")
                         // Reemplazar el objeto de API() por uno con token.
                         API.shared = .init(bearerToken: value.token)
-                        
-                        print("Dismissing nav stack...")
-                        // Salirse del nav stack de registro.
-                        dismiss()
-                        
-                        print("Changing tab...")
                         modelData.tab = .home
-                        
-                        print("Sleeping...")
                         try! await Task.sleep(nanoseconds: 750_000_000)
-                        
-                        print("Success.")
                         modelData.registrationSuccess = true
                     case .failure(_):
                         registrationFailure = true
@@ -78,7 +66,7 @@ struct MedicalBackground: View {
                 }
             })
             
-            if registering {
+            if loading {
                 LoadingOverlay(message: "Completando registro...")
                     .frame(maxHeight: .infinity)
             }

@@ -11,7 +11,7 @@ import SwiftUI
 // Para especificar el tipo de resultado cada vez que se use API.call(), ejemplo:
 // let result: HistoryResult = await API.call("records/history/")
 
-typealias EmptyResult = Result<[String: String], APIError>
+typealias StringResult = Result<[String: String], APIError>
 typealias GenericResult = Result<GenericJSON, APIError>
 typealias PatientResult = Result<Patient, APIError>
 typealias IndicatorResult = Result<HealthIndicator, APIError>
@@ -20,6 +20,11 @@ typealias RecordResult = Result<HealthRecord, APIError>
 typealias HistoryResult = Result<HealthRecordHistory, APIError>
 typealias IndicatorHistoryResult = Result<IndicatorSpecificHistory, APIError>
 typealias RegistrationResult = Result<RegistrationResponse, APIError>
+
+struct UserCredentials: Codable {
+    let email: String
+    let password: String
+}
 
 struct Patient: Codable, Identifiable {
     let id: Int
@@ -121,43 +126,4 @@ struct IndicatorSpecificHistory: Codable {
 struct RegistrationResponse: Codable, Identifiable {
     let id: Int
     let token: String
-}
-
-enum Tab {
-    case home, newRecord, profile
-}
-
-final class ModelData: ObservableObject {
-    // Tab de la vista principal
-    @Published var tab: Tab = .home
-    
-    // Datos de registro
-    @Published var firstNames: String = ""
-    @Published var lastNames: String = ""
-    @Published var email: String = ""
-    @Published var phoneNumber: String = ""
-    @Published var birthDate: Date = Date()
-    
-    @Published var password: String = ""
-    
-    @Published var height: String = ""
-    @Published var medicalHistory: String = ""
-    @Published var profilePhotoData: Data? = nil
-    
-    @Published var registrationSuccess = false
-    
-    func registerUser() async -> RegistrationResult {
-        let body = PatientRegistration(
-            email: email,
-            password: password,
-            firstNames: firstNames,
-            lastNames: lastNames,
-            phoneNumber: phoneNumber,
-            birthDate: birthDate,
-            height: height,
-            medicalHistory: medicalHistory,
-            doctor: 2)
-        
-        return await API.call("users/", method: .post, body: body, requiresToken: false)
-    }
 }

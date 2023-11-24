@@ -47,7 +47,7 @@ struct LoginView: View {
             .font(.title2)
             .foregroundStyle(Color.accentColor)
             
-            RegistrationButton(label: "Iniciar Sesión") {
+            AccentButton(label: "Iniciar Sesión") {
                 Task {
                     loading = true
                     let credentials = UserCredentials(email: email, password: password)

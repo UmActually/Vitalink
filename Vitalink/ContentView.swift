@@ -11,15 +11,6 @@ struct ContentView: View {
     @EnvironmentObject var modelData: ModelData
     
     var body: some View {
-        TopLevelView()
-            .id(modelData.manuallyReloadViews)
-    }
-}
-
-struct TopLevelView: View {
-    @EnvironmentObject var modelData: ModelData
-    
-    var body: some View {
         if API.userIsAuthenticated() {
             TabView(selection: $modelData.tab) {
                 HistoryView()
@@ -27,9 +18,9 @@ struct TopLevelView: View {
                         Label("Inicio", systemImage: "house")
                     }
                     .tag(Tab.home)
-                Text("New Record")
+                IndicatorSelection()
                     .tabItem {
-                        Label("Registro", systemImage: "plus")
+                        Label("Registros", systemImage: "plus")
                     }
                     .tag(Tab.newRecord)
                 ProfileView()

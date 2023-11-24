@@ -96,7 +96,7 @@ struct RegistrationView: View {
             }
             .fontDesign(.rounded)
             
-            RegistrationButton(label: "Siguiente", action: {
+            AccentButton(label: "Siguiente", action: {
                 if fieldsAreValid() {
                     activateNavLink = true
                 } else {

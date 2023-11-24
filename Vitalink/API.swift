@@ -12,7 +12,8 @@ typealias DjangoError = [String: String]
 typealias DjangoSerializerError = [String: [String]]
 
 //let baseURL = "http://localhost:8000/"
-let baseURL = "https://umm-actually.com/"
+let baseURL = "http://10.14.255.92:8000/"
+//let baseURL = "https://umm-actually.com/"
 
 func getEndpoint(_ path: String) -> URL {
     URL(string: baseURL + path)!
@@ -105,9 +106,10 @@ final class API {
     static let testing = false
     
     static var shared = API()
-    static let tests = API(email: "hermenegildo@example.com", password: "")
+    static let tests = API(email: "hermenegildo@example.com", password: "M4NGOtech")
     
     var bearerToken: String?
+    private var credentials: UserCredentials?
     
     init(bearerToken: String? = nil) {
         if let bearerToken = bearerToken {
@@ -124,22 +126,22 @@ final class API {
     
     // Solo para pruebas
     init(email: String, password: String) {
-        let credentials = UserCredentials(email: email, password: password)
-        Task {
-            let result: StringResult = await call("token/", method: .post, body: credentials, requiresToken: false)
-            switch result {
-            case .success(let value):
-                bearerToken = value["access"]
-            case .failure(_):
-                break
-            }
-        }
+        credentials = UserCredentials(email: email, password: password)
     }
     
     func call<T: Decodable>(_ endpointPath: String, method: HTTPMethod = .get, body: Encodable? = nil, requiresToken: Bool = true) async -> Result<T, APIError> {
-        let token = requiresToken ? bearerToken : ""
-        guard let token = token else {
-            return .failure(.init(0, nil))
+        var token = ""
+        
+        if requiresToken && bearerToken == nil {
+            let result: StringResult = await call("token/", method: .post, body: credentials!, requiresToken: false)
+            switch result {
+            case .success(let value):
+                token = value["access"]!
+            case .failure(_):
+                fatalError("Error al iniciar sesión.")
+            }
+        } else if requiresToken {
+            token = bearerToken!
         }
         
         let endpoint = getEndpoint(endpointPath)

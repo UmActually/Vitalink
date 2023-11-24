@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RegistrationButton: View {
+struct AccentButton: View {
     let label: String
     let action: () -> Void
     let secondary: Bool
@@ -38,7 +38,7 @@ struct RegistrationButton: View {
 }
 
 #Preview {
-    RegistrationButton(label: "Hola", action: {
+    AccentButton(label: "Hola", action: {
         print("Hola")
     }, secondary: true)
 }

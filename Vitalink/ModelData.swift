@@ -29,10 +29,11 @@ final class ModelData: ObservableObject {
     @Published var registrationSuccess = false
     
     // Creación de registros
+    @Published var selectedIndicators = Set<HealthIndicator>()
     @Published var recordInputs = [HealthRecordInput]()
     
-    func registerUser() async -> RegistrationResult {
-        let body = PatientRegistration(
+    func registerPatient() async -> RegistrationResult {
+        let body = PatientPostBody(
             email: email,
             password: password,
             firstNames: firstNames,
@@ -44,6 +45,14 @@ final class ModelData: ObservableObject {
             doctor: 2)
         
         return await API.call("users/", method: .post, body: body, requiresToken: false)
+    }
+    
+    func postRecords() async -> StringResult {
+        let body: [HealthRecordPostBody] = recordInputs.map({
+            .init(healthIndicatorId: $0.healthIndicator.id, value: $0.value, note: $0.note)
+        })
+        
+        return await API.call("records/bulk/", method: .post, body: body)
     }
 }
 

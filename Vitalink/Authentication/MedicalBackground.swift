@@ -44,15 +44,13 @@ struct MedicalBackground: View {
                 })
             }
             
-            RegistrationButton(label: "Registrarme", action: {
+            AccentButton(label: "Registrarme", action: {
                 modelData.medicalHistory = "Antecedentes Personales:\n\(personalBackground)\n\nAntecedentes Familiares:\n\(familyBackground)"
                 
                 Task {
                     loading = true
-                    print("Registering user...")
-                    let result = await modelData.registerUser()
+                    let result = await modelData.registerPatient()
                     loading = false
-                    print("Parsing result...")
                     switch result {
                     case .success(let value):
                         // Reemplazar el objeto de API() por uno con token.

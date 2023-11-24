@@ -39,7 +39,7 @@ struct Patient: Codable, Identifiable {
     let doctor: Int
 }
 
-struct PatientRegistration: Codable {
+struct PatientPostBody: Codable {
     let email: String
     let password: String
     let firstNames: String
@@ -69,7 +69,7 @@ struct PatientRegistration: Codable {
     }()
 }
 
-struct HealthIndicator: Codable, Identifiable {
+struct HealthIndicator: Codable, Identifiable, Hashable {
     let id: Int
     let name: String
     let medicalName: String?
@@ -79,6 +79,10 @@ struct HealthIndicator: Codable, Identifiable {
     let min: Double
     let max: Double
     let addedBy: Int?
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
 struct HealthRecord: Codable, Identifiable {
@@ -105,6 +109,18 @@ struct HealthRecordInput {
     let healthIndicator: HealthIndicator
     var value: Double
     var note: String
+}
+
+struct HealthRecordPostBody: Codable {
+    let healthIndicatorId: Int
+    let value: Double
+    let note: String?
+    
+    init(healthIndicatorId: Int, value: Double, note: String) {
+        self.healthIndicatorId = healthIndicatorId
+        self.value = value
+        self.note = note.isEmpty ? nil : note
+    }
 }
 
 struct HealthRecordHistory: Codable {

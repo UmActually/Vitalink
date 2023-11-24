@@ -37,10 +37,10 @@ struct WelcomeView: View {
                         .padding(.horizontal)
                     
                     VStack {
-                        RegistrationButton(label: "Registrarme") {
+                        AccentButton(label: "Registrarme") {
                             register = true
                         }
-                        RegistrationButton(label: "Iniciar sesión", action: {
+                        AccentButton(label: "Iniciar sesión", action: {
                             login = true
                         }, secondary: true)
                     }

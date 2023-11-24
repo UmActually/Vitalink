@@ -56,6 +56,7 @@ struct RecordElement: View {
                     .frame(height: 140)
             }
         }
+        .id(modelData.recordInputs.count)
     }
 }
 

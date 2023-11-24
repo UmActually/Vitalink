@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct AddRecordsView: View {
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var modelData: ModelData
+    
+    @State private var loading = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -21,8 +24,26 @@ struct AddRecordsView: View {
                 }
             }
             
-            RegistrationButton(label: "Listo") {
-                
+            AccentButton(label: "Listo") {
+                Task {
+                    loading = true
+                    let result = await modelData.postRecords()
+                    loading = false
+                    switch result {
+                    case .success(_):
+                        dismiss()
+                        try! await Task.sleep(nanoseconds: 50_000_000)
+                        modelData.tab = .home
+                        modelData.selectedIndicators.removeAll()
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            }
+            
+            if loading {
+                LoadingOverlay(message: "Completando registro...")
+                    .frame(maxHeight: .infinity)
             }
         }
         .navigationTitle("Registros")

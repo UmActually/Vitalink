@@ -32,6 +32,10 @@ final class ModelData: ObservableObject {
     @Published var selectedIndicators = Set<HealthIndicator>()
     @Published var recordInputs = [HealthRecordInput]()
     
+    // Indicadores custom
+    @Published var customAlertPresented = false
+    @Published var newCustomName = ""
+    
     func registerPatient() async -> RegistrationResult {
         let body = PatientPostBody(
             email: email,

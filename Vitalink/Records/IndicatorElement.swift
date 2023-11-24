@@ -16,6 +16,16 @@ struct IndicatorElement: View {
         modelData.selectedIndicators.contains(indicator)
     }
     
+    var icon: String {
+        if indicator.addedBy != nil {
+            return "person.crop.circle"
+        }
+        if indicator.isCuantitative {
+            return "number.square"
+        }
+        return "dial.min"
+    }
+    
     var body: some View {
         ZStack {
             Rectangle()
@@ -37,7 +47,7 @@ struct IndicatorElement: View {
                 
                 Spacer()
                 
-                Image(systemName: indicator.isCuantitative ? "number.square" : "dial.min")
+                Image(systemName: icon)
                     .foregroundStyle(isSelected ? .white : .primary)
             }
             .padding(.horizontal, 2)

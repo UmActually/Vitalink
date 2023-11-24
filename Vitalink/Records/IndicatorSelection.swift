@@ -10,15 +10,12 @@ import SwiftUI
 struct IndicatorSelection: View {
     static let gridItems: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     
+    @Environment(\.dismissSearch) var dismissSearch
     @EnvironmentObject var modelData: ModelData
     @State private var indicators: [HealthIndicator]? = nil
     @State private var suggested: [HealthIndicator]? = nil
     @State private var search = ""
     @State private var activateNavLink = false
-    
-    var didSelect: Bool {
-        !modelData.selectedIndicators.isEmpty
-    }
     
     var body: some View {
         NavigationView {
@@ -43,17 +40,30 @@ struct IndicatorSelection: View {
                             Text("Sugeridos")
                         })
                         
-                        Section(content: {
-                            ForEach(indicators) { indicator in
-                                IndicatorElement(indicator: indicator)
+                        if !indicators.isEmpty {
+                            Section(content: {
+                                ForEach(indicators) { indicator in
+                                    IndicatorElement(indicator: indicator)
+                                }
+                            }, header: {
+                                Text("Todos")
+                            })
+                        }
+                        
+                        if !search.isEmpty {
+                            Button("Crear Indicador Personalizado") {
+                                modelData.newCustomName = search
+                                search = ""
+                                dismissSearch()
+                                modelData.customAlertPresented = true
                             }
-                        }, header: {
-                            Text("Todos")
-                        })
+                            .foregroundStyle(Color.accentColor)
+                        }
                     }
-                    .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always), prompt: "Buscar")
+                    .id(modelData.manuallyReloadViews)
+                    .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always), prompt: "Buscar o Crear")
                     
-                    if didSelect {
+                    if !modelData.selectedIndicators.isEmpty {
                         AccentButton(label: "Continuar") {
                             var recordInputs = [HealthRecordInput]()
                             for indicator in modelData.selectedIndicators {
@@ -62,6 +72,29 @@ struct IndicatorSelection: View {
                             modelData.recordInputs = recordInputs
                             activateNavLink = true
                         }
+                    }
+                    
+                    if modelData.customAlertPresented {
+                        CustomConfirmation(search: search, cancelAction: {
+                            modelData.customAlertPresented = false
+                            modelData.newCustomName = ""
+                        }, okAction: {
+                            Task {
+                                let body = CustomIndicatorPostBody(name: modelData.newCustomName)
+                                let result: IndicatorResult = await API.call("indicators/custom/", method: .post, body: body)
+                                switch result {
+                                case .success(let value):
+                                    // Para evitar que se tenga que volver a cargar la lista. No sé como hacer eso.
+                                    self.indicators?.insert(value, at: 0)
+                                case .failure(_):
+                                    break
+                                }
+                                modelData.customAlertPresented = false
+                                modelData.newCustomName = ""
+                                try! await Task.sleep(nanoseconds: 750_000_000)
+                                modelData.manuallyReloadViews.toggle()
+                            }
+                        })
                     }
                 }
                 .navigationTitle("Indicadores")

@@ -51,7 +51,7 @@ struct IndicatorHistory: View {
                     }
                     Section(content: {
                         ForEach(history.results) { record in
-                            HistoryElement(record: record, indicator: indicator)
+                            HistoryElement(record: record, indicator: indicator, includeDate: true)
                         }
                     }, header: {
                         Text("Registros")
@@ -101,17 +101,6 @@ struct IndicatorNumbers: View {
                     .font(.title)
                     .bold()
                 Text("En \(spanishMonthName())")
-                    .fontDesign(.rounded)
-            }
-            Spacer()
-            Divider()
-            Spacer()
-            VStack {
-                Text("_")
-                    .fontDesign(.rounded)
-                    .font(.title)
-                    .bold()
-                Text("Otro dato")
                     .fontDesign(.rounded)
             }
             Spacer()

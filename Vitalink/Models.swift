@@ -85,6 +85,10 @@ struct HealthIndicator: Codable, Identifiable, Hashable {
     }
 }
 
+struct CustomIndicatorPostBody: Codable {
+    let name: String
+}
+
 struct HealthRecord: Codable, Identifiable {
     let id: Int
     let date: Date

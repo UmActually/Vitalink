@@ -11,11 +11,13 @@ struct AccentButton: View {
     let label: String
     let action: () -> Void
     let secondary: Bool
+    let padding: Bool
     
-    init(label: String, action: @escaping () -> Void, secondary: Bool = false) {
+    init(label: String, action: @escaping () -> Void, secondary: Bool = false, padding: Bool = true) {
         self.label = label
         self.action = action
         self.secondary = secondary
+        self.padding = padding
     }
     
     var body: some View {
@@ -25,7 +27,7 @@ struct AccentButton: View {
                     .foregroundStyle(secondary ? Color.secondaryButton : Color.accentColor)
                     .clipShape(.rect(cornerRadius: 8))
                     .frame(maxWidth: .infinity, maxHeight: 52)
-                    .padding(.horizontal)
+                    .padding(.horizontal, padding ? 16 : 0)
                 
                 Text(label)
                     .foregroundStyle(secondary ? Color.accentColor : Color.white)

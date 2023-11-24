@@ -14,6 +14,7 @@ import SwiftUI
 typealias StringResult = Result<[String: String], APIError>
 typealias GenericResult = Result<GenericJSON, APIError>
 typealias PatientResult = Result<Patient, APIError>
+typealias DoctorResult = Result<Doctor, APIError>
 typealias IndicatorResult = Result<HealthIndicator, APIError>
 typealias IndicatorsResult = Result<[HealthIndicator], APIError>
 typealias RecordResult = Result<HealthRecord, APIError>
@@ -34,7 +35,7 @@ struct Patient: Codable, Identifiable {
     let phoneNumber: String?
     let dateJoined: Date
     let birthDate: Date
-    let height: Double
+    let height: Double?
     let medicalHistory: String?
     let doctor: Int
 }
@@ -67,6 +68,14 @@ struct PatientPostBody: Codable {
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
+}
+
+struct Doctor: Codable, Identifiable {
+    let id: Int
+    let email: String
+    let firstNames: String
+    let lastNames: String
+    let phoneNumber: String?
 }
 
 struct HealthIndicator: Codable, Identifiable, Hashable {

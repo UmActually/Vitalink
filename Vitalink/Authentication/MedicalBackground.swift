@@ -69,7 +69,7 @@ struct MedicalBackground: View {
                     .frame(maxHeight: .infinity)
             }
         }
-        .navigationTitle("Registro del Usuario")
+        .navigationTitle("Antecedentes")
         .alert(isPresented: $registrationFailure) {
             Alert(title: Text("Error"), message: Text("Hubo un error en el registro. Favor de intentar más tarde."), dismissButton: .default(Text("OK")))
         }

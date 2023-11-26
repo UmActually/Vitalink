@@ -12,8 +12,10 @@ typealias DjangoError = [String: String]
 typealias DjangoSerializerError = [String: [String]]
 
 //let baseURL = "http://localhost:8000/"
-let baseURL = "http://10.14.255.92:8000/"
+//let baseURL = "http://10.14.255.92:8000/"
 //let baseURL = "https://umm-actually.com/"
+//let baseURL = "http://192.168.1.194:8000/"
+let baseURL = "http://3.16.180.210/"
 
 func getEndpoint(_ path: String) -> URL {
     URL(string: baseURL + path)!

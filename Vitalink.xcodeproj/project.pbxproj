@@ -81,6 +81,7 @@
 		A758769A2B0F374F00E709FF /* RecordElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordElement.swift; sourceTree = "<group>"; };
 		A758769C2B0F377A00E709FF /* AddRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecordsView.swift; sourceTree = "<group>"; };
 		A758B9082B104C3200C1B83D /* IndicatorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorElement.swift; sourceTree = "<group>"; };
+		A7682BBE2B12C71900276DAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A7948E112B109977006EE4CB /* CustomConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfirmation.swift; sourceTree = "<group>"; };
 		A79E5BCA2B0FEA8D00430A39 /* IndicatorSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorSelection.swift; sourceTree = "<group>"; };
 		A79E5BCC2B0FEB3C00430A39 /* SuggestedIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedIndicator.swift; sourceTree = "<group>"; };
@@ -149,6 +150,7 @@
 		A748E70A2B01F4D60002990A /* Vitalink */ = {
 			isa = PBXGroup;
 			children = (
+				A7682BBE2B12C71900276DAB /* Info.plist */,
 				A748E70B2B01F4D60002990A /* VitalinkApp.swift */,
 				A748E70D2B01F4D60002990A /* ContentView.swift */,
 				A7F55A842B0604EA0076580F /* History */,
@@ -557,6 +559,7 @@
 				DEVELOPMENT_TEAM = 665EKHPR8S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Vitalink/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -586,6 +589,7 @@
 				DEVELOPMENT_TEAM = 665EKHPR8S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Vitalink/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

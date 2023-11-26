@@ -48,7 +48,7 @@ struct HistoryView: View {
                     // dropFirst es para quitarle el "http://localhost:80/" -> 20
                     // "http://umm-actually.com/" -> 24
                     // "http://10.14.255.92:8000/" -> 25
-                    if let next = history.next?.dropFirst(25) {
+                    if let next = history.next?.dropFirst(20) {
                         HStack {
                             Spacer()
                             Button(loadingMore ? "Cargando..." : "Cargar Más") {

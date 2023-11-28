@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A70478922B15A06B0029AA83 /* GenericProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70478912B15A06B0029AA83 /* GenericProfile.swift */; };
+		A70478942B15A8D30029AA83 /* PatientList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70478932B15A8D30029AA83 /* PatientList.swift */; };
+		A70478962B15AAF30029AA83 /* PatientElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70478952B15AAF30029AA83 /* PatientElement.swift */; };
 		A70E798F2B0BF1400026F138 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70E798E2B0BF1400026F138 /* LoadingOverlay.swift */; };
 		A70E79922B0D46310026F138 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70E79912B0D46310026F138 /* WelcomeView.swift */; };
 		A70E79942B0DA3480026F138 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70E79932B0DA3480026F138 /* LoginView.swift */; };
@@ -22,7 +25,7 @@
 		A748E7382B01F55C0002990A /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748E7372B01F55C0002990A /* API.swift */; };
 		A758768B2B0EB1D000E709FF /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758768A2B0EB1D000E709FF /* ModelData.swift */; };
 		A758768D2B0EB1F400E709FF /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758768C2B0EB1F400E709FF /* Keychain.swift */; };
-		A758768F2B0EB9B900E709FF /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758768E2B0EB9B900E709FF /* ProfileView.swift */; };
+		A758768F2B0EB9B900E709FF /* PatientProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758768E2B0EB9B900E709FF /* PatientProfile.swift */; };
 		A75876922B0F1AED00E709FF /* QualitativeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75876912B0F1AED00E709FF /* QualitativeInput.swift */; };
 		A75876942B0F1B0800E709FF /* QuantitativeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75876932B0F1B0800E709FF /* QuantitativeInput.swift */; };
 		A758769B2B0F374F00E709FF /* RecordElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758769A2B0F374F00E709FF /* RecordElement.swift */; };
@@ -57,6 +60,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A70478912B15A06B0029AA83 /* GenericProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericProfile.swift; sourceTree = "<group>"; };
+		A70478932B15A8D30029AA83 /* PatientList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientList.swift; sourceTree = "<group>"; };
+		A70478952B15AAF30029AA83 /* PatientElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientElement.swift; sourceTree = "<group>"; };
 		A70E798E2B0BF1400026F138 /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		A70E79912B0D46310026F138 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		A70E79932B0DA3480026F138 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -75,7 +81,7 @@
 		A748E7372B01F55C0002990A /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		A758768A2B0EB1D000E709FF /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		A758768C2B0EB1F400E709FF /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
-		A758768E2B0EB9B900E709FF /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		A758768E2B0EB9B900E709FF /* PatientProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientProfile.swift; sourceTree = "<group>"; };
 		A75876912B0F1AED00E709FF /* QualitativeInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QualitativeInput.swift; sourceTree = "<group>"; };
 		A75876932B0F1B0800E709FF /* QuantitativeInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitativeInput.swift; sourceTree = "<group>"; };
 		A758769A2B0F374F00E709FF /* RecordElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordElement.swift; sourceTree = "<group>"; };
@@ -196,7 +202,8 @@
 		A75876902B0EB9C500E709FF /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				A758768E2B0EB9B900E709FF /* ProfileView.swift */,
+				A758768E2B0EB9B900E709FF /* PatientProfile.swift */,
+				A70478912B15A06B0029AA83 /* GenericProfile.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -233,6 +240,8 @@
 				A7F55A7C2B05DCB80076580F /* HistoryView.swift */,
 				A7F55A822B05F02B0076580F /* HistoryElement.swift */,
 				A7F55A802B05DD110076580F /* IndicatorHistory.swift */,
+				A70478932B15A8D30029AA83 /* PatientList.swift */,
+				A70478952B15AAF30029AA83 /* PatientElement.swift */,
 				A7F55A7E2B05DCEB0076580F /* RecordValueBar.swift */,
 			);
 			path = History;
@@ -372,17 +381,19 @@
 				A748E7362B01F5390002990A /* Models.swift in Sources */,
 				A7F55A812B05DD110076580F /* IndicatorHistory.swift in Sources */,
 				A79E5BCB2B0FEA8E00430A39 /* IndicatorSelection.swift in Sources */,
+				A70478922B15A06B0029AA83 /* GenericProfile.swift in Sources */,
 				A758768B2B0EB1D000E709FF /* ModelData.swift in Sources */,
 				A7948E122B109977006EE4CB /* CustomConfirmation.swift in Sources */,
 				A748E70E2B01F4D60002990A /* ContentView.swift in Sources */,
 				A75876922B0F1AED00E709FF /* QualitativeInput.swift in Sources */,
 				A7B552F22B07FC3300046C80 /* RegistrationView.swift in Sources */,
 				A758768D2B0EB1F400E709FF /* Keychain.swift in Sources */,
+				A70478942B15A8D30029AA83 /* PatientList.swift in Sources */,
 				A7F55A832B05F02B0076580F /* HistoryElement.swift in Sources */,
 				A70FAFD42B080E0C00ACC640 /* AccentButton.swift in Sources */,
 				A79E5BCD2B0FEB3C00430A39 /* SuggestedIndicator.swift in Sources */,
 				A7F55A7F2B05DCEB0076580F /* RecordValueBar.swift in Sources */,
-				A758768F2B0EB9B900E709FF /* ProfileView.swift in Sources */,
+				A758768F2B0EB9B900E709FF /* PatientProfile.swift in Sources */,
 				A758769B2B0F374F00E709FF /* RecordElement.swift in Sources */,
 				A70E79922B0D46310026F138 /* WelcomeView.swift in Sources */,
 				A70E79942B0DA3480026F138 /* LoginView.swift in Sources */,
@@ -392,6 +403,7 @@
 				A748E70C2B01F4D60002990A /* VitalinkApp.swift in Sources */,
 				A7B552F42B07FD2000046C80 /* MedicalBackground.swift in Sources */,
 				A70E798F2B0BF1400026F138 /* LoadingOverlay.swift in Sources */,
+				A70478962B15AAF30029AA83 /* PatientElement.swift in Sources */,
 				A758769D2B0F377A00E709FF /* AddRecordsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

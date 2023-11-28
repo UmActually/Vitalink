@@ -14,13 +14,15 @@ import SwiftUI
 typealias StringResult = Result<[String: String], APIError>
 typealias GenericResult = Result<GenericJSON, APIError>
 typealias PatientResult = Result<Patient, APIError>
-typealias DoctorResult = Result<Doctor, APIError>
+typealias GenericUserResult = Result<GenericUser, APIError>
+typealias MinimalUsersResult = Result<[MinimalUser], APIError>
 typealias IndicatorResult = Result<HealthIndicator, APIError>
 typealias IndicatorsResult = Result<[HealthIndicator], APIError>
 typealias RecordResult = Result<HealthRecord, APIError>
 typealias HistoryResult = Result<HealthRecordHistory, APIError>
 typealias IndicatorHistoryResult = Result<IndicatorSpecificHistory, APIError>
 typealias RegistrationResult = Result<RegistrationResponse, APIError>
+typealias LoginResult = Result<LoginResponse, APIError>
 
 struct UserCredentials: Codable {
     let email: String
@@ -70,7 +72,16 @@ struct PatientPostBody: Codable {
     }()
 }
 
-struct Doctor: Codable, Identifiable {
+struct GenericUser: Codable, Identifiable {
+    let id: Int
+    let email: String
+    let firstNames: String
+    let lastNames: String
+    let phoneNumber: String?
+    let dateJoined: Date
+}
+
+struct MinimalUser: Codable, Identifiable {
     let id: Int
     let email: String
     let firstNames: String
@@ -161,4 +172,10 @@ struct IndicatorSpecificHistory: Codable {
 struct RegistrationResponse: Codable, Identifiable {
     let id: Int
     let token: String
+}
+
+struct LoginResponse: Codable {
+    let access: String
+    let refresh: String
+    let role: Int
 }

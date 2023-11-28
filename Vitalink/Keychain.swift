@@ -12,7 +12,8 @@ class Keychain {
     static let accountName = "BearerToken"
 
     // Save token to Keychain
-    static func saveToken(_ token: String) {
+    static func saveToken(_ token: String, _ userRole: Int) {
+        let token = token + String(userRole)
         guard let data = token.data(using: .utf8) else {
             return
         }
@@ -38,7 +39,7 @@ class Keychain {
     }
 
     // Load token from Keychain
-    static func loadToken() -> String? {
+    static func loadToken() -> (String, Int)? {
         // Create query for loading from Keychain
         let query = [
             kSecClass as String: kSecClassGenericPassword as String,
@@ -53,13 +54,19 @@ class Keychain {
 
         guard status == errSecSuccess,
               let tokenData = result as? Data,
-              let token = String(data: tokenData, encoding: .utf8) else {
+              let tokenAndRole = String(data: tokenData, encoding: .utf8) else {
             print("Failed to load token from Keychain with status: \(status)")
             return nil
         }
+        
+        let token = String(tokenAndRole.dropLast(1))
+        guard let role = Int(tokenAndRole.suffix(1)) else {
+            deleteToken()
+            fatalError("El token no contiene el rol del usuario.")
+        }
 
         print("Token loaded from Keychain")
-        return token
+        return (token, role)
     }
 
     // Delete token from Keychain

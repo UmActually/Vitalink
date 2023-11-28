@@ -1,5 +1,5 @@
 //
-//  ProfileView.swift
+//  PatientProfile.swift
 //  Vitalink
 //
 //  Created by Leonardo Corona Garza on 11/22/23.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct ProfileView: View {
+struct PatientProfile: View {
     @EnvironmentObject var modelData: ModelData
     @State private var patient: Patient? = nil
-    @State private var doctor: Doctor? = nil
+    @State private var doctor: GenericUser? = nil
     
     var body: some View {
         NavigationView {
@@ -93,7 +93,7 @@ struct ProfileView: View {
                 break
             }
             
-            let doctorResult: DoctorResult = await API.call("me/doctor/")
+            let doctorResult: GenericUserResult = await API.call("me/doctor/")
             switch doctorResult {
             case .success(let value):
                 doctor = value
@@ -105,5 +105,5 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
+    PatientProfile()
 }

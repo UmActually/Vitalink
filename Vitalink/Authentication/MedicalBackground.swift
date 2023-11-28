@@ -54,7 +54,7 @@ struct MedicalBackground: View {
                     switch result {
                     case .success(let value):
                         // Reemplazar el objeto de API() por uno con token.
-                        API.shared = .init(bearerToken: value.token)
+                        API.shared = .init(bearerToken: value.token, userRole: 0)
                         modelData.tab = .home
                         try! await Task.sleep(nanoseconds: 750_000_000)
                         modelData.registrationSuccess = true

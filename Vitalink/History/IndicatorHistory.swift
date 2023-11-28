@@ -10,6 +10,17 @@ import Charts
 
 struct IndicatorHistory: View {
     let indicator: HealthIndicator
+    let endpoint: String
+    
+    init(indicator: HealthIndicator) {
+        self.indicator = indicator
+        endpoint = "records/indicators/\(indicator.id)/history/"
+    }
+    
+    init(patientID: Int, indicator: HealthIndicator) {
+        self.indicator = indicator
+        endpoint = "users/\(patientID)/indicators/\(indicator.id)/history/"
+    }
     
     @State private var history: IndicatorSpecificHistory? = nil
     
@@ -66,7 +77,7 @@ struct IndicatorHistory: View {
             }
         }
         .task {
-            let result: IndicatorHistoryResult = await API.call("records/indicators/\(indicator.id)/history/")
+            let result: IndicatorHistoryResult = await API.call(endpoint)
             switch result {
             case .success(let value):
                 history = value

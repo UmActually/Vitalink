@@ -12,10 +12,7 @@ typealias DjangoError = [String: String]
 typealias DjangoSerializerError = [String: [String]]
 
 //let baseURL = "http://localhost:8000/"
-//let baseURL = "http://10.14.255.92:8000/"
-//let baseURL = "https://umm-actually.com/"
-//let baseURL = "http://192.168.1.194:8000/"
-let baseURL = "http://3.16.180.210/"
+let baseURL = "http://10.14.255.92:8000/"
 
 func getEndpoint(_ path: String) -> URL {
     URL(string: baseURL + path)!
@@ -55,6 +52,21 @@ enum HTTPStatusCode {
             self = .serverError
         default:
             self = .other
+        }
+    }
+}
+
+enum UserRole {
+    case patient, doctor, admin
+    
+    init(_ role: Int) {
+        switch role {
+        case 1:
+            self = .doctor
+        case 2:
+            self = .admin
+        default:
+            self = .patient
         }
     }
 }
@@ -111,34 +123,40 @@ final class API {
     static let tests = API(email: "hermenegildo@example.com", password: "M4NGOtech")
     
     var bearerToken: String?
-    private var credentials: UserCredentials?
+    var userRole: UserRole?
+    private var userCredentials: UserCredentials?
     
-    init(bearerToken: String? = nil) {
-        if let bearerToken = bearerToken {
-            self.bearerToken = bearerToken
-            Keychain.saveToken(bearerToken)
-        } else {
-            if let keychainToken = Keychain.loadToken() {
-                self.bearerToken = keychainToken
-            } else {
-                self.bearerToken = nil
-            }
+    init() {
+        if let (keychainToken, keychainRole) = Keychain.loadToken() {
+            bearerToken = keychainToken
+            userRole = .init(keychainRole)
         }
+    }
+    
+    init(bearerToken: String, userRole: Int) {
+        self.bearerToken = bearerToken
+        self.userRole = .init(userRole)
+        Keychain.saveToken(bearerToken, userRole)
     }
     
     // Solo para pruebas
     init(email: String, password: String) {
-        credentials = UserCredentials(email: email, password: password)
+        userCredentials = UserCredentials(email: email, password: password)
     }
     
     func call<T: Decodable>(_ endpointPath: String, method: HTTPMethod = .get, body: Encodable? = nil, requiresToken: Bool = true) async -> Result<T, APIError> {
         var token = ""
         
         if requiresToken && bearerToken == nil {
-            let result: StringResult = await call("token/", method: .post, body: credentials!, requiresToken: false)
+            guard let credentials = userCredentials else {
+                return .failure(.init(500, nil))
+            }
+            
+            let result: LoginResult = await call("token/", method: .post, body: credentials, requiresToken: false)
             switch result {
             case .success(let value):
-                token = value["access"]!
+                token = value.access
+                userRole = .init(value.role)
             case .failure(_):
                 fatalError("Error al iniciar sesión.")
             }
@@ -201,6 +219,11 @@ final class API {
     static func userIsAuthenticated() -> Bool {
         let instance = testing ? Self.tests : Self.shared
         return instance.userIsAuthenticated
+    }
+    
+    static func userRole() -> UserRole? {
+        let instance = testing ? Self.tests : Self.shared
+        return instance.userRole
     }
     
     static func logout() {

@@ -11,7 +11,7 @@ import PhotosUI
 struct LoginView: View {
     @EnvironmentObject var modelData: ModelData
     
-    @State private var email: String = "hermenegildo@example.com"
+    @State private var email: String = ""
     @State private var password: String = ""
     @State private var alertPresented = false
     @State private var alertText = ""
@@ -51,12 +51,12 @@ struct LoginView: View {
                 Task {
                     loading = true
                     let credentials = UserCredentials(email: email, password: password)
-                    let result: StringResult = await API.call("token/", method: .post, body: credentials, requiresToken: false)
+                    let result: LoginResult = await API.call("token/", method: .post, body: credentials, requiresToken: false)
                     loading = false
                     switch result {
                     case .success(let value):
-                        API.shared = .init(bearerToken: value["access"])
-                        modelData.tab = .home
+                        API.shared = .init(bearerToken: value.access, userRole: value.role)
+                        modelData.manuallyReloadViews.toggle()
                     case .failure(_):
                         alertPresented = true
                     }

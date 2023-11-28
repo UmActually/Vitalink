@@ -8,6 +8,22 @@
 import SwiftUI
 
 struct HistoryView: View {
+    let patientID: Int?
+    let endpoint: String
+    let navigationTitle: String
+    
+    init() {
+        patientID = nil
+        endpoint = "records/history/"
+        navigationTitle = "Historial"
+    }
+    
+    init(patientID: Int, patientName: String) {
+        self.patientID = patientID
+        endpoint = "users/\(patientID)/history/"
+        navigationTitle = patientName
+    }
+    
     @EnvironmentObject var modelData: ModelData
     
     @State private var history: HealthRecordHistory? = nil
@@ -16,13 +32,21 @@ struct HistoryView: View {
     @State private var loadingMore = false
     
     var body: some View {
-        NavigationView {
+        Group {
             if let history = history {
                 List {
                     ForEach(history.results, id: \.self[0].id) { dayRecords in
                         Section(content: {
                             ForEach(dayRecords) { record in
-                                NavigationLink(destination: IndicatorHistory(indicator: record.healthIndicator)) {
+                                NavigationLink(destination: {
+                                    if let patientID = patientID {
+                                        // Vista de doctor
+                                        IndicatorHistory(patientID: patientID, indicator: record.healthIndicator)
+                                    } else {
+                                        // Vista de paciente
+                                        IndicatorHistory(indicator: record.healthIndicator)
+                                    }
+                                }) {
                                     HistoryElement(record: record)
                                 }
                             }
@@ -48,7 +72,7 @@ struct HistoryView: View {
                     // dropFirst es para quitarle el "http://localhost:80/" -> 20
                     // "http://umm-actually.com/" -> 24
                     // "http://10.14.255.92:8000/" -> 25
-                    if let next = history.next?.dropFirst(20) {
+                    if let next = history.next?.dropFirst(25) {
                         HStack {
                             Spacer()
                             Button(loadingMore ? "Cargando..." : "Cargar Más") {
@@ -76,11 +100,11 @@ struct HistoryView: View {
                 }
                 .id(modelData.manuallyReloadViews)
                 .listStyle(.insetGrouped)
-                .navigationTitle("Historial")
+                .navigationTitle(navigationTitle)
             } else {
                 ProgressView("Cargando...")
                     .progressViewStyle(.circular)
-                    .navigationTitle("Historial")
+                    .navigationTitle(navigationTitle)
             }
         }
         .alert("Error", isPresented: $alertPresented) {
@@ -89,7 +113,7 @@ struct HistoryView: View {
             Text(alertText)
         }
         .task {
-            let result: HistoryResult = await API.call("records/history/")
+            let result: HistoryResult = await API.call(endpoint)
             switch result {
             case .success(let value):
                 history = value

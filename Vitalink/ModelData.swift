@@ -53,7 +53,7 @@ final class ModelData: ObservableObject {
     
     func postRecords() async -> StringResult {
         let body: [HealthRecordPostBody] = recordInputs.map({
-            .init(healthIndicatorId: $0.healthIndicator.id, value: $0.value, note: $0.note)
+            .init(healthIndicatorId: $0.healthIndicator.id, value: $0.value, altValue: $0.altValue, note: $0.note)
         })
         
         return await API.call("records/bulk/", method: .post, body: body)

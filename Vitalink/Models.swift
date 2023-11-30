@@ -113,11 +113,12 @@ struct HealthRecord: Codable, Identifiable {
     let id: Int
     let date: Date
     let value: Double
+    let altValue: Double?
     let note: String?
     let user: Int
     let healthIndicator: HealthIndicator
     
-    static let sample = HealthRecord(id: 1, date: Date(), value: 37.5, note: "Fiebre terminó desde hoy en la mañana.", user: 0, healthIndicator: HealthIndicator(id: 1, name: "Temperatura corporal", medicalName: "Cefalea tensional", isCuantitative: false, isDecimal: true, unitOfMeasurement: "°C", min: 1, max: 10, addedBy: nil))
+    static let sample = HealthRecord(id: 1, date: Date(), value: 102, altValue: 80, note: "Se ha reducido la presión últimamente.", user: 0, healthIndicator: HealthIndicator(id: 1, name: "Presión arterial", medicalName: "Nombre médico", isCuantitative: true, isDecimal: false, unitOfMeasurement: "mmHg", min: 0, max: 300, addedBy: nil))
 }
 
 struct MinimalHealthRecord: Codable, Identifiable {
@@ -126,23 +127,27 @@ struct MinimalHealthRecord: Codable, Identifiable {
     let id: Int
     let date: Date
     let value: Double
+    let altValue: Double?
     let note: String?
 }
 
 struct HealthRecordInput {
     let healthIndicator: HealthIndicator
     var value: Double
+    var altValue: Double?
     var note: String
 }
 
 struct HealthRecordPostBody: Codable {
     let healthIndicatorId: Int
     let value: Double
+    let altValue: Double?
     let note: String?
     
-    init(healthIndicatorId: Int, value: Double, note: String) {
+    init(healthIndicatorId: Int, value: Double, altValue: Double?, note: String) {
         self.healthIndicatorId = healthIndicatorId
         self.value = value
+        self.altValue = altValue
         self.note = note.isEmpty ? nil : note
     }
 }

@@ -51,6 +51,12 @@ struct HistoryView: View {
                                 }
                             }
                             .onDelete { offsets in
+                                if patientID != nil {
+                                    alertText = "En este momento, un doctor no puede borrar registros de un paciente."
+                                    alertPresented = true
+                                    return
+                                }
+                                
                                 Task {
                                     for index in offsets {
                                         let recordID = dayRecords[index].id
@@ -60,6 +66,19 @@ struct HistoryView: View {
                                             modelData.manuallyReloadViews.toggle()
                                         case .failure(_):
                                             break
+                                        }
+                                    }
+                                }
+                                
+                                // Código un poco puerco, puede mejorar
+                                for index in offsets {
+                                    let recordID = dayRecords[index].id
+                                    for (dayIndex, day) in history.results.enumerated() {
+                                        for (recordIndex, record) in day.enumerated() {
+                                            if record.id == recordID {
+                                                self.history!.results[dayIndex].remove(at: recordIndex)
+                                                return
+                                            }
                                         }
                                     }
                                 }

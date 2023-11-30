@@ -31,6 +31,8 @@
 		A758769B2B0F374F00E709FF /* RecordElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758769A2B0F374F00E709FF /* RecordElement.swift */; };
 		A758769D2B0F377A00E709FF /* AddRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758769C2B0F377A00E709FF /* AddRecordsView.swift */; };
 		A758B9092B104C3200C1B83D /* IndicatorElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A758B9082B104C3200C1B83D /* IndicatorElement.swift */; };
+		A77B86E22B1900CE0099DB37 /* IndicatorChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B86E12B1900CE0099DB37 /* IndicatorChart.swift */; };
+		A77B86E42B1908C00099DB37 /* BloodPressureInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77B86E32B1908C00099DB37 /* BloodPressureInput.swift */; };
 		A7948E122B109977006EE4CB /* CustomConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7948E112B109977006EE4CB /* CustomConfirmation.swift */; };
 		A79E5BCB2B0FEA8E00430A39 /* IndicatorSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E5BCA2B0FEA8D00430A39 /* IndicatorSelection.swift */; };
 		A79E5BCD2B0FEB3C00430A39 /* SuggestedIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A79E5BCC2B0FEB3C00430A39 /* SuggestedIndicator.swift */; };
@@ -88,6 +90,8 @@
 		A758769C2B0F377A00E709FF /* AddRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecordsView.swift; sourceTree = "<group>"; };
 		A758B9082B104C3200C1B83D /* IndicatorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorElement.swift; sourceTree = "<group>"; };
 		A7682BBE2B12C71900276DAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A77B86E12B1900CE0099DB37 /* IndicatorChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorChart.swift; sourceTree = "<group>"; };
+		A77B86E32B1908C00099DB37 /* BloodPressureInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloodPressureInput.swift; sourceTree = "<group>"; };
 		A7948E112B109977006EE4CB /* CustomConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomConfirmation.swift; sourceTree = "<group>"; };
 		A79E5BCA2B0FEA8D00430A39 /* IndicatorSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorSelection.swift; sourceTree = "<group>"; };
 		A79E5BCC2B0FEB3C00430A39 /* SuggestedIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedIndicator.swift; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 				A79E5BCC2B0FEB3C00430A39 /* SuggestedIndicator.swift */,
 				A758769A2B0F374F00E709FF /* RecordElement.swift */,
 				A7948E112B109977006EE4CB /* CustomConfirmation.swift */,
+				A77B86E32B1908C00099DB37 /* BloodPressureInput.swift */,
 			);
 			path = Records;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 				A7F55A7C2B05DCB80076580F /* HistoryView.swift */,
 				A7F55A822B05F02B0076580F /* HistoryElement.swift */,
 				A7F55A802B05DD110076580F /* IndicatorHistory.swift */,
+				A77B86E12B1900CE0099DB37 /* IndicatorChart.swift */,
 				A70478932B15A8D30029AA83 /* PatientList.swift */,
 				A70478952B15AAF30029AA83 /* PatientElement.swift */,
 				A7F55A7E2B05DCEB0076580F /* RecordValueBar.swift */,
@@ -381,6 +387,7 @@
 				A748E7362B01F5390002990A /* Models.swift in Sources */,
 				A7F55A812B05DD110076580F /* IndicatorHistory.swift in Sources */,
 				A79E5BCB2B0FEA8E00430A39 /* IndicatorSelection.swift in Sources */,
+				A77B86E42B1908C00099DB37 /* BloodPressureInput.swift in Sources */,
 				A70478922B15A06B0029AA83 /* GenericProfile.swift in Sources */,
 				A758768B2B0EB1D000E709FF /* ModelData.swift in Sources */,
 				A7948E122B109977006EE4CB /* CustomConfirmation.swift in Sources */,
@@ -393,6 +400,7 @@
 				A70FAFD42B080E0C00ACC640 /* AccentButton.swift in Sources */,
 				A79E5BCD2B0FEB3C00430A39 /* SuggestedIndicator.swift in Sources */,
 				A7F55A7F2B05DCEB0076580F /* RecordValueBar.swift in Sources */,
+				A77B86E22B1900CE0099DB37 /* IndicatorChart.swift in Sources */,
 				A758768F2B0EB9B900E709FF /* PatientProfile.swift in Sources */,
 				A758769B2B0F374F00E709FF /* RecordElement.swift in Sources */,
 				A70E79922B0D46310026F138 /* WelcomeView.swift in Sources */,

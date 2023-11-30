@@ -67,7 +67,7 @@ struct IndicatorSelection: View {
                         AccentButton(label: "Continuar") {
                             var recordInputs = [HealthRecordInput]()
                             for indicator in modelData.selectedIndicators {
-                                recordInputs.append(.init(healthIndicator: indicator, value: indicator.min, note: ""))
+                                recordInputs.append(.init(healthIndicator: indicator, value: indicator.min, altValue: indicator.id == 6 ? 0 : nil, note: ""))
                             }
                             modelData.recordInputs = recordInputs
                             activateNavLink = true

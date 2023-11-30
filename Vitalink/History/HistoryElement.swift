@@ -12,6 +12,7 @@ struct HistoryElement: View {
     let medicalName: String?
     let value: Double
     let valueString: String
+    let altValueString: String?
     let unitOfMeasurement: String?
     let isCuantitative: Bool
     let date: String
@@ -23,10 +24,11 @@ struct HistoryElement: View {
         name = record.healthIndicator.name
         medicalName = record.healthIndicator.medicalName
         value = record.value
-        if record.healthIndicator.isDecimal {
-            valueString = String(record.value)
+        valueString = record.healthIndicator.isDecimal ? String(record.value) : String(Int(record.value))
+        if let altValue = record.altValue {
+            altValueString = "/" + (record.healthIndicator.isDecimal ? String(altValue) : String(Int(altValue)))
         } else {
-            valueString = String(Int(record.value))
+            altValueString = nil
         }
         unitOfMeasurement = record.healthIndicator.unitOfMeasurement
         isCuantitative = record.healthIndicator.isCuantitative
@@ -40,10 +42,11 @@ struct HistoryElement: View {
         name = indicator.name
         medicalName = indicator.medicalName
         value = record.value
-        if indicator.isDecimal {
-            valueString = String(record.value)
+        valueString = indicator.isDecimal ? String(record.value) : String(Int(record.value))
+        if let altValue = record.altValue {
+            altValueString = "/" + (indicator.isDecimal ? String(altValue) : String(Int(altValue)))
         } else {
-            valueString = String(Int(record.value))
+            altValueString = nil
         }
         unitOfMeasurement = indicator.unitOfMeasurement
         isCuantitative = indicator.isCuantitative
@@ -83,17 +86,27 @@ struct HistoryElement: View {
                     }
                 }
                 Spacer()
-                VStack {
+                VStack(alignment: .trailing) {
                     HStack(alignment: .firstTextBaseline) {
                         Text(valueString)
-                            .fontDesign(.rounded)
                             .font(.title)
                             .bold()
-                        Text(unitOfMeasurement ?? "/10")
-                            .fontDesign(.rounded)
+                        if let altValueString = altValueString {
+                            Text(altValueString)
+                                .bold()
+                                .font(.title3)
+                        } else {
+                            Text(unitOfMeasurement ?? "/10")
+                        }
                     }
+                    .fontDesign(.rounded)
+                    
                     if !isCuantitative {
                         RecordValueBar(value: value)
+                    }
+                    if altValueString != nil {
+                        Text(unitOfMeasurement ?? "/10")
+                            .fontDesign(.rounded)
                     }
                 }
                 

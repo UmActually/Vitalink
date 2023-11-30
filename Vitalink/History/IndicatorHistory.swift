@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Charts
 
 struct IndicatorHistory: View {
     let indicator: HealthIndicator
@@ -43,22 +42,7 @@ struct IndicatorHistory: View {
                         .padding(.vertical)
                     }
                     Section {
-                        Chart {
-                            ForEach(history.results) { record in
-                                LineMark(
-                                    x: .value("Date", record.date),
-                                    y: .value("Value", record.value)
-                                )
-                            }
-                        }
-                        .chartXAxisLabel("Tiempo")
-                        .chartYAxisLabel(indicator.unitOfMeasurement ?? "Intensidad")
-                        .chartYAxis {
-                            AxisMarks(values: .automatic(desiredCount: 5))
-                        }
-                        .chartYScale(domain: [indicator.min, indicator.max])
-                        .frame(height: 250)
-                        .padding()
+                        IndicatorChart(history: history, unitOfMeasurement: indicator.unitOfMeasurement, min: indicator.min, max: indicator.max)
                     }
                     Section(content: {
                         ForEach(history.results) { record in

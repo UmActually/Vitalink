@@ -32,7 +32,9 @@ struct RecordElement: View {
                     }
                 }
                 
-                if indicator.isCuantitative {
+                if indicator.id == 6 {
+                    BloodPressureInput(index: index)
+                } else if indicator.isCuantitative {
                     QuantitativeInput(index: index)
                 } else {
                     QualitativeInput(index: index)
